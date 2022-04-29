@@ -11,9 +11,7 @@ target_include_directories(proi_projekt
         "${CMAKE_CURRENT_SOURCE_DIR}/include"
         )
 
-find_library(Box2D box2d REQUIRED)
-
-find_package(SFML 2 COMPONENTS system window graphics network audio)
+add_subdirectory(libs)
 
 target_link_libraries(proi_projekt sfml-graphics)
 
