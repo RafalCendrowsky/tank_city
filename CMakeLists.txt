@@ -13,8 +13,9 @@ target_include_directories(proi_projekt
 
 add_subdirectory(libs)
 
-target_link_libraries(proi_projekt sfml-graphics)
-
-target_link_libraries(proi_projekt box2d)
+target_link_libraries(proi_projekt
+        sfml-graphics
+        box2d
+        )
 
 
