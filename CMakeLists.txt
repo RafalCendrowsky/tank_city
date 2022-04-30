@@ -11,10 +11,10 @@ target_include_directories(proi_projekt
         "${CMAKE_CURRENT_SOURCE_DIR}/include"
         )
 
-add_subdirectory(libs)
-
 target_link_libraries(proi_projekt
         sfml-graphics
+        sfml-system
+        sfml-window
         box2d
         )
 
