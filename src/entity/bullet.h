@@ -4,7 +4,5 @@
 
 class Bullet : public Entity {
 public:
-    Bullet(sf::Vector2f position, b2World& world, double speed);
-private:
-    double speed;
+    Bullet(sf::Vector2f position, b2World& world, b2Vec2 velocity);
 };
