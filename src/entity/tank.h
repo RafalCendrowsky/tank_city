@@ -16,8 +16,8 @@ public:
     Tank(sf::Image texture, sf::Vector2<double> position, b2World &world, double speed = 0, int hp = 1);
     void move(e_direction direction);
     Bullet &shoot();
-    double getSpeed() { return speed; };
-    int getHp() { return hp; };
+    double getSpeed() const { return speed; };
+    int getHp() const { return hp; };
     void setSpeed(double newSpeed) { speed = newSpeed; };
     void setHp(int newHp) { hp = newHp; };
 
