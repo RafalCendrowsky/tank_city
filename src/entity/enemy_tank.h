@@ -1,14 +1,12 @@
 #pragma once
 
 #include "tank.h"
-#include "movement_strategy.h"
 
 class EnemyTank: public Tank {
 public:
-    EnemyTank(sf::Image texture, sf::Vector2<double> position, MovementStrategy strategy);
-    void run();
+    EnemyTank(sf::Image texture, sf::Vector2<double> position);
+    void stop() override;
+    virtual void run() = 0;
 private:
-    MovementStrategy strategy;
-
-    friend MovementStrategy;
+    bool stopped;
 };

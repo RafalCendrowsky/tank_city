@@ -9,7 +9,7 @@ public:
     Tank(sf::Image texture, sf::Vector2<double> position, double speed, int hp = 1);;
     void move(e_direction direction);
     Bullet& shoot();
-    void stop();
+    virtual void stop();
 private:
     double speed;
     int hp;
