@@ -1,12 +1,14 @@
 #include <vector>
-#include "../player_tank.h"
-#include "../enemy_tank.h"
+#include "./entity/player_tank.h"
+#include "./entity/enemy_tank.h"
+#include "./entity/target.h"
 
 class GameManager{
     public:
+        enum e_type{};
         void endGame();
         void startGame();
-        &EnemyTank createTank(enum type);
+        EnemyTank& createTank(e_type type);
     private:
         std::vector<EnemyTank> tanks;
         PlayerTank player;

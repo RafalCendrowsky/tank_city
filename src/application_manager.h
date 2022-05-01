@@ -1,15 +1,17 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
-#include "entity.h"
+#include <box2d/b2_world.h>
+#include "./entity/entity.h"
+#include "./game_manager.h"
 
 
 class ApplicationManager{
 
     private:
-        b2world world;
+        b2World world;
         sf::RenderWindow window;
         std::vector<Entity> entities;
-        TankManager tankmanager;
+        GameManager gameManager;
 
         void update();
         void render();
