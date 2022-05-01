@@ -10,7 +10,6 @@ public:
     virtual void destroy();
 private:
     sf::Sprite sprite;
-    sf::Vector2f position;
     b2Body* body;
     bool destroyed;
 };
