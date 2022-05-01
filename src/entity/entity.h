@@ -7,7 +7,7 @@ public:
     Entity(sf::Image texture, sf::Vector2f position, b2World& world, bool dynamic);
     bool isDestroyed();
     void update();
-    void destroy();
+    virtual void destroy();
 private:
     sf::Sprite sprite;
     sf::Vector2f position;
