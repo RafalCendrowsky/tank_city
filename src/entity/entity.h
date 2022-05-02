@@ -5,7 +5,7 @@
 
 class Entity {
 public:
-    Entity(sf::Image image, sf::Vector2f position, b2World& world);
+    Entity(const sf::Image& image, sf::Vector2f position, b2World& world);
     bool isDestroyed() const;
     void update();
     virtual void destroy();
@@ -15,5 +15,5 @@ private:
     sf::Sprite sprite;
     sf::Texture texture;
     b2Body* body;
-    bool destroyed;
+    bool destroyed = false;
 };
