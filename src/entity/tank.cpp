@@ -6,7 +6,7 @@
 Tank::Tank(sf::Image image, sf::Vector2<double> position, b2World& world, double speed = 0, int hp = 1):
     Entity(image, position, world), hp(hp), speed(speed) {};
 
-void Tank::move(Tank::e_direction direction){
+void Tank::move(Tank::eDirection direction){
 
 };
 
