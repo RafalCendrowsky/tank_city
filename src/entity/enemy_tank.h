@@ -8,8 +8,7 @@ public:
     EnemyTank(sf::Image image, sf::Vector2<float> position, b2World &world);
     void stop() override;
     void run();
-    void setIsStopped(bool isStopped) { stopped = isStopped; };
-    bool getIsStopped() { return stopped; };
+    bool getStopped() { return stopped; };
 
 private:
     bool stopped;

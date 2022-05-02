@@ -6,12 +6,12 @@ void EnemyTank::stop()
 {
     b2Vec2 velocity(0, 0);
     this->getBody()->SetLinearVelocity(velocity);
-    setIsStopped(true);
+    stopped = true;
 };
 
 
 void EnemyTank::run()
 {   Tank::eDirection direction = Tank::eDirection(rand() % 4);
     move(direction);
-    setIsStopped(false);
+    stopped = false;
 };
