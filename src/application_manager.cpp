@@ -12,10 +12,38 @@ void ApplicationManager::update() {
     }
 }
 
+void ApplicationManager::run() {
+    while (window.isOpen()) {
+        this->handleEvents();
+        this->update();
+        this->render();
+        this->window.display();
+    }
+}
+
 void ApplicationManager::render() {
     this->window.clear(sf::Color::Black);
     for (const Entity& entity : entities) {
         this->window.draw(entity.getSprite());
+    }
+}
+
+void ApplicationManager::onKeyPress(int key) {
+    switch (key) {
+        case sf::Keyboard::Left:
+            this->gameManager.movePlayer(PlayerTank::eDirection::LEFT);
+            break;
+        case sf::Keyboard::Right:
+            this->gameManager.movePlayer(PlayerTank::eDirection::RIGHT);
+            break;
+        case sf::Keyboard::Up:
+            this->gameManager.movePlayer(PlayerTank::eDirection::UP);
+            break;
+        case sf::Keyboard::Down:
+            this->gameManager.movePlayer(PlayerTank::eDirection::DOWN);
+            break;
+        default:
+            break;
     }
 }
 
@@ -34,7 +62,7 @@ void ApplicationManager::handleEvents() {
             case sf::Event::KeyReleased:
                 if (*std::find(movementKeys.begin(), movementKeys.end(),
                                event.key.code)== event.key.code) {
-                    // TODO: implement function for stopping the player
+                    this->gameManager.stopPlayer();
                 }
                 break;
             default:
