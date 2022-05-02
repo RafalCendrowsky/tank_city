@@ -21,4 +21,19 @@ sf::Sprite Entity::getSprite() const {
     return this->sprite;
 }
 
-void Entity::destroy() {}
+bool Entity::isDestroyed() const {
+    return this->destroyed;
+}
+
+void Entity::update() {
+    sf::Vector2<float> position {this->body->GetPosition().x, this->body->GetPosition().y};
+    this->sprite.setPosition(position);
+}
+
+void Entity::destroy() {
+    this->destroyed = true;
+}
+
+b2Body* Entity::getBody() {
+    return this->body;
+}
