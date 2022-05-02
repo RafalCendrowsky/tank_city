@@ -5,7 +5,7 @@
 
 class Entity {
 public:
-    Entity(sf::Image image, sf::Vector2f position, b2World& world, bool dynamic);
+    Entity(sf::Image image, sf::Vector2f position, b2World& world);
     bool isDestroyed() const;
     void update();
     virtual void destroy();
