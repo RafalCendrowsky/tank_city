@@ -13,13 +13,14 @@ public:
         UP,
         DOWN
     };
-    Tank(sf::Image image, sf::Vector2<double> position, b2World &world, double speed = 0, int hp = 1);
+    Tank(sf::Image image, sf::Vector2<float> position, b2World &world, double speed = 0, int hp = 1);
     void move(eDirection direction);
     Bullet &shoot();
     double getSpeed() const { return speed; };
     int getHp() const { return hp; };
     void setSpeed(double newSpeed) { speed = newSpeed; };
     void setHp(int newHp) { hp = newHp; };
+    virtual void stop();
 
 private:
     double speed;

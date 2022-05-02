@@ -4,7 +4,7 @@
 
 class EnemyTank: public Tank {
 public:
-    EnemyTank(sf::Image image, sf::Vector2<double> position, b2World& world);
+    EnemyTank(sf::Image texture, sf::Vector2<float> position, b2World& world);
     void stop() override;
     void run();
 private:
