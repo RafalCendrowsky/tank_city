@@ -5,14 +5,15 @@
 
 class Entity {
 public:
-    Entity(sf::Image texture, sf::Vector2f position, b2World& world, bool dynamic);
+    Entity(sf::Image image, sf::Vector2f position, b2World& world, bool dynamic);
     bool isDestroyed() const;
     void update();
     virtual void destroy();
     sf::Sprite getSprite() const;
-    b2Body getBody() const;
+    b2Body* getBody();
 private:
     sf::Sprite sprite;
+    sf::Texture texture;
     b2Body* body;
     bool destroyed;
 };
