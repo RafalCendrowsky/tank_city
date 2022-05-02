@@ -1,6 +1,4 @@
 #include "tank.h"
-#include "entity.h"
-#include "bullet.h"
 
 Tank::Tank(sf::Image image, sf::Vector2<float> position, b2World &world, double speed, int hp) : Entity(image, position, world), hp(hp), speed(speed){};
 
@@ -10,16 +8,16 @@ void Tank::move(Tank::eDirection direction)
     speed = this->getSpeed();
     switch (direction)
     {
-    case 0:
+    case RIGHT:
         velocity.Set(speed, 0);
         break;
-    case 1:
+    case LEFT:
         velocity.Set(-speed, 0);
         break;
-    case 2:
+    case UP:
         velocity.Set(0, speed);
         break;
-    case 3:
+    case DOWN:
         velocity.Set(0, -speed);
         break;
     }
@@ -35,21 +33,21 @@ void Tank::stop()
 
 Bullet &Tank::shoot()
 {
-    int direction = getDirection();
+    eDirection direction = getDirection();
     b2Vec2 velocity(0, 0);
     double bulletSpeed = 2*this->getSpeed();
     switch (direction)
     {
-    case 0:
+    case RIGHT:
         velocity.Set(bulletSpeed, 0);
         break;
-    case 1:
+    case LEFT:
         velocity.Set(-bulletSpeed, 0);
         break;
-    case 2:
+    case UP:
         velocity.Set(0, bulletSpeed);
         break;
-    case 3:
+    case DOWN:
         velocity.Set(0, -bulletSpeed);
         break;
     }

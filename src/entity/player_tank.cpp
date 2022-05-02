@@ -1,5 +1,3 @@
-#include "tank.h"
-#include "entity.h"
 #include "player_tank.h"
 
 PlayerTank::PlayerTank(sf::Image image, sf::Vector2<float> position, b2World &world, int lives) : Tank::Tank(image, position, world){};
