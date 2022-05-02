@@ -6,15 +6,15 @@
 class Tank : public Entity
 {
 public:
-    enum e_direction
+    enum eDirection
     {
-        RIGHT = 0,
-        LEFT = 1,
-        TOP = 2,
-        BOTTOM = 3
+        RIGHT,
+        LEFT,
+        UP,
+        DOWN
     };
-    Tank(sf::Image texture, sf::Vector2<double> position, b2World &world, double speed = 0, int hp = 1);
-    void move(e_direction direction);
+    Tank(sf::Image image, sf::Vector2<double> position, b2World &world, double speed = 0, int hp = 1);
+    void move(eDirection direction);
     Bullet &shoot();
     double getSpeed() const { return speed; };
     int getHp() const { return hp; };
