@@ -8,6 +8,8 @@ class GameManager{
         enum e_type{};
         void endGame();
         void startGame();
+        void movePlayer(PlayerTank::eDirection direction);
+        void stopPlayer();
         EnemyTank& createTank(e_type type);
     private:
         std::vector<EnemyTank> tanks;
