@@ -5,6 +5,8 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_executable(proi_projekt main.cpp)
 
+add_subdirectory(src)
+
 target_include_directories(proi_projekt
         PRIVATE
         "${PROJECT_BINARY_DIR}"
