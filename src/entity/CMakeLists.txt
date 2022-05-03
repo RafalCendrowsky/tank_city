@@ -1,1 +1,1 @@
-add_executable(entity.cpp tank.cpp enemy_tank.cpp player_tank.cpp)
+target_sources(app PRIVATE entity.cpp tank.cpp enemy_tank.cpp player_tank.cpp)

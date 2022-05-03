@@ -1,2 +1,2 @@
 add_subdirectory(entity)
-add_executable(application_manager.cpp game_manager.cpp)
+target_sources(app PRIVATE application_manager.cpp game_manager.cpp)
