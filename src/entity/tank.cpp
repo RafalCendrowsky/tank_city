@@ -1,11 +1,10 @@
 #include "tank.h"
 
-Tank::Tank(sf::Image image, sf::Vector2<float> position, b2World &world, double speed, int hp) : Entity(image, position, world), hp(hp), speed(speed){};
+Tank::Tank(sf::Image image, sf::Vector2<float> position, b2World &world, eDirection direction, double speed, int hp) : Entity(image, position, world), hp(hp), speed(speed), direction(direction){};
 
 void Tank::move(Tank::eDirection direction)
 {
     b2Vec2 velocity(0, 0);
-    speed = this->getSpeed();
     switch (direction)
     {
     case RIGHT:
@@ -15,10 +14,10 @@ void Tank::move(Tank::eDirection direction)
         velocity.Set(-speed, 0);
         break;
     case UP:
-        velocity.Set(0, speed);
+        velocity.Set(0, -speed);
         break;
     case DOWN:
-        velocity.Set(0, -speed);
+        velocity.Set(0, speed);
         break;
     }
     this->setDirection(direction);
@@ -33,9 +32,8 @@ void Tank::stop()
 
 Bullet &Tank::shoot()
 {
-    eDirection direction = getDirection();
     b2Vec2 velocity(0, 0);
-    double bulletSpeed = 2*this->getSpeed();
+    double bulletSpeed = 2 * speed;
     switch (direction)
     {
     case RIGHT:
@@ -45,13 +43,28 @@ Bullet &Tank::shoot()
         velocity.Set(-bulletSpeed, 0);
         break;
     case UP:
-        velocity.Set(0, bulletSpeed);
-        break;
-    case DOWN:
         velocity.Set(0, -bulletSpeed);
         break;
+    case DOWN:
+        velocity.Set(0, bulletSpeed);
+        break;
     }
-    std::unique_ptr<Bullet> bulletPtr;
-    bulletPtr.reset(new Bullet((this->getSprite()).getPosition(), this->getBody()->GetWorld(), velocity));
+    std::unique_ptr<Bullet> bulletPointer;
+    bulletPointer.reset(new Bullet((this->getSprite()).getPosition(), this->getBody()->GetWorld(), velocity));
+    this->bulletPtr.swap(bulletPointer);
     return *bulletPtr;
 };
+
+bool Tank::hasShot()
+{
+    if (this->bulletPtr == nullptr || this->bulletPtr->isDestroyed())
+    {
+        this->bulletPtr = nullptr;
+        this->shot = false;
+    }
+    else
+    {
+        this->shot = true;
+    }
+    return this->shot;
+}
