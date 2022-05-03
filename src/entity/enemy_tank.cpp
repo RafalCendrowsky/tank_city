@@ -1,6 +1,6 @@
 #include "enemy_tank.h"
 
-EnemyTank::EnemyTank(sf::Image image, sf::Vector2<float> position, b2World &world) : Tank::Tank(image, position, world), stopped(false){};
+EnemyTank::EnemyTank(sf::Image image, sf::Vector2<float> position, b2World &world) : Tank::Tank(image, position, world, DOWN), stopped(false){};
 
 void EnemyTank::stop()
 {
