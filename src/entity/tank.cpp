@@ -1,10 +1,12 @@
 #include "tank.h"
+#include <iostream>
 
 Tank::Tank(sf::Image image, sf::Vector2<float> position, b2World &world, eDirection direction, double speed, int hp) : Entity(image, position, world), hp(hp), speed(speed), direction(direction){};
 
 void Tank::move(Entity::eDirection direction)
 {
     b2Vec2 velocity(0, 0);
+    rotate(direction);
     switch (direction)
     {
     case RIGHT:
@@ -33,27 +35,32 @@ void Tank::stop()
 std::shared_ptr<Bullet> Tank::shoot()
 {
     b2Vec2 velocity(0, 0);
+    auto position = this->getSprite().getPosition();
+    auto size = this->getSprite().getTextureRect().getSize();
     double bulletSpeed = 2 * speed;
     switch (direction)
     {
     case RIGHT:
+        position.x += size.x * 3 / 2;
         velocity.Set(bulletSpeed, 0);
         break;
     case LEFT:
+        position.x -= size.x * 3 / 2;
         velocity.Set(-bulletSpeed, 0);
         break;
     case UP:
+        position.y -= size.y;
         velocity.Set(0, -bulletSpeed);
         break;
     case DOWN:
+        position.y += size.y;
         velocity.Set(0, bulletSpeed);
         break;
     }
-    std::shared_ptr<Bullet> bulletPointer;
     sf::Image image;
     image.loadFromFile("src/resources/bullet.png");
-    bulletPointer.reset(new Bullet(image, (this->getSprite()).getPosition(), *this->getBody()->GetWorld(), velocity));
-    this->bulletPtr.swap(bulletPointer);
+    std::shared_ptr<Bullet> bulletPointer(new Bullet(image, position, *this->getBody()->GetWorld(), velocity));
+    this->bulletPtr = bulletPointer;
     return bulletPtr;
 };
 
@@ -69,4 +76,8 @@ bool Tank::hasShot()
         this->shot = true;
     }
     return this->shot;
+}
+
+void Tank::removeBullet() {
+    this->bulletPtr->destroy();
 }

@@ -1,12 +1,13 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <memory>
 #include "entity.h"
 #include "bullet.h"
 
 class Tank : public Entity
 {
 public:
-    Tank(sf::Image image, sf::Vector2<float> position, b2World &world, eDirection direction, double speed = 0, int hp = 1);
+    Tank(sf::Image image, sf::Vector2<float> position, b2World &world, eDirection direction, double speed = 2, int hp = 1);
     void move(Entity::eDirection direction);
     std::shared_ptr<Bullet> shoot();
     eDirection getDirection() const { return direction; };
@@ -16,6 +17,7 @@ public:
     void setHp(int newHp) { hp = newHp; };
     virtual void stop();
     bool hasShot();
+    void removeBullet();
 
 private:
     double speed;

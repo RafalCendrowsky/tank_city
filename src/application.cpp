@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <iostream>
 #include "application.h"
 
 void Application::update() {
@@ -39,25 +40,25 @@ void Application::onKeyPress(int key) {
     switch (key) {
         case sf::Keyboard::Left:
             currentKey = key;
-            playerManager.movePlayer(PlayerTank::eDirection::LEFT);
+            playerManager.movePlayer(Entity::eDirection::LEFT);
             break;
         case sf::Keyboard::Right:
             currentKey = key;
-            playerManager.movePlayer(PlayerTank::eDirection::RIGHT);
+            playerManager.movePlayer(Entity::eDirection::RIGHT);
             break;
         case sf::Keyboard::Up:
             currentKey = key;
-            playerManager.movePlayer(PlayerTank::eDirection::UP);
+            playerManager.movePlayer(Entity::eDirection::UP);
             break;
         case sf::Keyboard::Down:
             currentKey = key;
-            playerManager.movePlayer(PlayerTank::eDirection::DOWN);
+            playerManager.movePlayer(Entity::eDirection::DOWN);
             break;
         case sf::Keyboard::Space:
             playerManager.playerShoot();
             break;
-//        case sf::Keyboard::Z:
-//            playerManager.removeBullet();
+        case sf::Keyboard::Z:
+            playerManager.removeBullet();
             break;
         case sf::Keyboard::Escape:
             this->window.close();
