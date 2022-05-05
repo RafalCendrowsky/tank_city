@@ -5,35 +5,64 @@
 Entity::Entity(const sf::Image& image, sf::Vector2f position, b2World &world) {
     if (!texture.loadFromImage(image))
         throw std::invalid_argument("Invalid image for texture");
-    this->sprite.setTexture(this->texture);
-    this->sprite.setPosition(position);
+
+    sprite.setTexture(texture);
+    sprite.setPosition(position);
+    sprite.setOrigin(sf::Vector2<float> {static_cast<float>(texture.getSize().x) / 2, (float)(texture.getSize().y) / 2});
 
     b2BodyDef bodyDef;
     bodyDef.position.Set(position.x, position.y);
     bodyDef.type = b2_dynamicBody;
-    this->body = world.CreateBody(&bodyDef);
+    body = world.CreateBody(&bodyDef);
+
     b2PolygonShape dynamicBox;
-    dynamicBox.SetAsBox(image.getSize().x, image.getSize().y);
-    this->body->CreateFixture(&dynamicBox, 1.0f);
+    dynamicBox.SetAsBox(texture.getSize().x / 2, texture.getSize().y / 2);
+    body->CreateFixture(&dynamicBox, 1.0f);
+
+    body->GetUserData().pointer = (uintptr_t)(this);
 }
 
 sf::Sprite Entity::getSprite() const {
-    return this->sprite;
+    return sprite;
 }
 
 bool Entity::isDestroyed() const {
-    return this->destroyed;
+    return destroyed;
 }
 
 void Entity::update() {
-    sf::Vector2<float> position {this->body->GetPosition().x, this->body->GetPosition().y};
-    this->sprite.setPosition(position);
+    sf::Vector2<float> position {body->GetPosition().x, body->GetPosition().y};
+    sprite.setPosition(position);
 }
 
 void Entity::destroy() {
-    this->destroyed = true;
+    destroyed = true;
 }
 
 b2Body* Entity::getBody() {
-    return this->body;
+    return body;
+}
+
+bool Entity::isBullet() const {
+    return bullet;
+}
+
+void Entity::rotate(Entity::eDirection direction) {
+    switch (direction) {
+
+        case RIGHT:
+            sprite.setRotation(sf::degrees(90.f));
+            break;
+        case LEFT:
+            sprite.setRotation(sf::degrees(-90.f));
+            break;
+        case UP:
+            sprite.setRotation(sf::degrees(0.f));
+            break;
+        case DOWN:
+            sprite.setRotation(sf::degrees(180.f));
+            break;
+        default:
+            break;
+    }
 }
