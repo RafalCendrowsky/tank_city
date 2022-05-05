@@ -1,14 +1,14 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include <box2d/b2_world.h>
-#include "../entity/entity.h"
-#include "player_manager.h"
-#include "enemy_manager.h"
-#include "map_manager.h"
-#include "../contact_listener.h"
+#include "entity/entity.h"
+#include "manager/player_manager.h"
+#include "manager/enemy_manager.h"
+#include "manager/map_manager.h"
+#include "contact_listener.h"
 
 
-class ApplicationManager{
+class Application{
 public:
     void run();
 private:

@@ -1,7 +1,7 @@
 #include <algorithm>
-#include "application_manager.h"
+#include "application.h"
 
-void ApplicationManager::update() {
+void Application::update() {
     world.Step(timeStep, velocityIterations, positionIterations);
     playerManager.update();
     bulletManager.update();
@@ -9,7 +9,7 @@ void ApplicationManager::update() {
     mapManager.update();
 }
 
-void ApplicationManager::run() {
+void Application::run() {
     world.SetContactListener(&contactListener);
     window.setKeyRepeatEnabled(false);
     int count = 0;
@@ -27,7 +27,7 @@ void ApplicationManager::run() {
     }
 }
 
-void ApplicationManager::render() {
+void Application::render() {
     window.clear(sf::Color::Black);
     playerManager.render();
     bulletManager.render();
@@ -35,7 +35,7 @@ void ApplicationManager::render() {
     mapManager.render();
 }
 
-void ApplicationManager::onKeyPress(int key) {
+void Application::onKeyPress(int key) {
     switch (key) {
         case sf::Keyboard::Left:
             currentKey = key;
@@ -66,7 +66,7 @@ void ApplicationManager::onKeyPress(int key) {
     }
 }
 
-void ApplicationManager::handleEvents() {
+void Application::handleEvents() {
     sf::Event event{};
     while (window.pollEvent(event)) {
         switch (event.type) {
