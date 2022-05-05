@@ -2,7 +2,7 @@
 
 Tank::Tank(sf::Image image, sf::Vector2<float> position, b2World &world, eDirection direction, double speed, int hp) : Entity(image, position, world), hp(hp), speed(speed), direction(direction){};
 
-void Tank::move(Tank::eDirection direction)
+void Tank::move(Entity::eDirection direction)
 {
     b2Vec2 velocity(0, 0);
     switch (direction)
@@ -30,7 +30,7 @@ void Tank::stop()
     this->getBody()->SetLinearVelocity(velocity);
 };
 
-Bullet &Tank::shoot()
+std::shared_ptr<Bullet> Tank::shoot()
 {
     b2Vec2 velocity(0, 0);
     double bulletSpeed = 2 * speed;
@@ -49,10 +49,12 @@ Bullet &Tank::shoot()
         velocity.Set(0, bulletSpeed);
         break;
     }
-    std::unique_ptr<Bullet> bulletPointer;
-    bulletPointer.reset(new Bullet((this->getSprite()).getPosition(), this->getBody()->GetWorld(), velocity));
+    std::shared_ptr<Bullet> bulletPointer;
+    sf::Image image;
+    image.loadFromFile("src/resources/bullet.png");
+    bulletPointer.reset(new Bullet(image, (this->getSprite()).getPosition(), *this->getBody()->GetWorld(), velocity));
     this->bulletPtr.swap(bulletPointer);
-    return *bulletPtr;
+    return bulletPtr;
 };
 
 bool Tank::hasShot()

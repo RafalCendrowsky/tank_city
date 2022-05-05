@@ -1,6 +1,6 @@
-#include "src/manager/application_manager.h"
+#include "src/application.h"
 int main() {
-    ApplicationManager app;
+    Application app;
     app.run();
     return 0;
 }

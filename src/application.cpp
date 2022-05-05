@@ -56,8 +56,8 @@ void Application::onKeyPress(int key) {
         case sf::Keyboard::Space:
             playerManager.playerShoot();
             break;
-        case sf::Keyboard::Z:
-            playerManager.removeBullet();
+//        case sf::Keyboard::Z:
+//            playerManager.removeBullet();
             break;
         case sf::Keyboard::Escape:
             this->window.close();

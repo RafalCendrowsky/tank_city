@@ -39,8 +39,8 @@ void PlayerManager::playerShoot() {
     }
 }
 
-void PlayerManager::removeBullet() {
-    if (bulletPtr != nullptr) {
-        playerPtr->removeBullet();
-    }
-}
+//void PlayerManager::removeBullet() {
+//    if (bulletPtr != nullptr) {
+//        playerPtr->removeBullet();
+//    }
+//}
