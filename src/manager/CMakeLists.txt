@@ -1,0 +1,1 @@
+target_sources(app PRIVATE application_manager.cpp player_manager.cpp enemy_manager.cpp map_manager.cpp)

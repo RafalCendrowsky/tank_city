@@ -1,2 +1,3 @@
 add_subdirectory(entity)
-target_sources(app PRIVATE application_manager.cpp game_manager.cpp)
+add_subdirectory(manager)
+target_sources(app PRIVATE contact_listener.cpp)

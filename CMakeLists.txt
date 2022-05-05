@@ -22,4 +22,12 @@ target_link_libraries(app
         box2d
         )
 
+set (source "${CMAKE_SOURCE_DIR}/src/resources")
+set (destination "${CMAKE_CURRENT_BINARY_DIR}/src/resources")
 
+add_custom_command(
+        TARGET app POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E create_symlink ${source} ${destination}
+        DEPENDS ${destination}
+        COMMENT "symbolic link resources folder from ${source} => ${destination}"
+)

@@ -1,4 +1,4 @@
-#include "src/application_manager.h"
+#include "src/manager/application_manager.h"
 int main() {
     ApplicationManager app;
     app.run();
