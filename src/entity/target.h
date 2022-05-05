@@ -4,5 +4,5 @@
 
 class Target : public Entity {
 public:
-    Target(sf::Vector2f position, b2World& world);
+    Target(sf::Image image, sf::Vector2f position, b2World& world);
 };

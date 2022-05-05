@@ -4,5 +4,5 @@
 
 class Wall : public Entity {
 public:
-    Wall(sf::Vector2f position, b2World& world);
+    Wall(sf::Image image, sf::Vector2f position, b2World& world);
 };
