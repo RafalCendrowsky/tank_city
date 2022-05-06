@@ -19,7 +19,7 @@ void MapManager::createMap() {
 void MapManager::createWall(const sf::Image& image, sf::Vector2<float> position) {
     std::shared_ptr<Entity> wallPtr(new Entity(image, position, world));
     b2BodyDef bodyDef;
-    bodyDef.position = b2Vec2 {position.x, position.y};
+    bodyDef.position = b2Vec2 {position.x / Entity::SCALE, position.y / Entity::SCALE};
     bodyDef.type = b2_staticBody;
     b2Body* corner = world.CreateBody(&bodyDef);
     b2WeldJointDef jointDef;
