@@ -13,18 +13,27 @@ void Application::update() {
 void Application::run() {
     world.SetContactListener(&contactListener);
     window.setKeyRepeatEnabled(false);
-    int count = 0;
     mapManager.createMap();
+    sf::Clock clock;
+    sf::Clock enemyTimer;
+    float accumulator = 0;
     while (window.isOpen()) {
-        count++;
-        if (count > 10000) {
-            count = 0;
+        if (enemyTimer.getElapsedTime().asSeconds() > 1.8) {
             enemyManager.act();
+            enemyTimer.restart();
+        }
+        accumulator += clock.getElapsedTime().asSeconds();
+        clock.restart();
+        while (accumulator > timeStep) {
+            std::cout << accumulator << std::endl;
+            world.Step(timeStep, velocityIterations, positionIterations);
+            accumulator -= timeStep;
         }
         handleEvents();
         update();
         render();
         window.display();
+        while (clock.getElapsedTime().asSeconds() < timeStep) {}
     }
 }
 

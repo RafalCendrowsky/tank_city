@@ -5,6 +5,7 @@
 
 class Entity {
 public:
+    static float SCALE;
     enum eDirection {RIGHT, LEFT, UP, DOWN};
     Entity(const sf::Image& image, sf::Vector2f position, b2World& world);
     bool isDestroyed() const;
