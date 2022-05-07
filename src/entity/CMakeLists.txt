@@ -1,1 +1,1 @@
-target_sources(app PRIVATE entity.cpp tank.cpp enemy_tank.cpp player_tank.cpp bullet.cpp)
+target_sources(app PRIVATE entity.cpp tank.cpp enemy_tank.cpp player_tank.cpp bullet.cpp indestructiblewall.cpp wall.cpp)

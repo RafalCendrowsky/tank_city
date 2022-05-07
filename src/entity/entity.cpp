@@ -18,35 +18,74 @@ Entity::Entity(const sf::Image& image, sf::Vector2f position, b2World &world) {
     body = world.CreateBody(&bodyDef);
 
     b2PolygonShape dynamicBox;
-    dynamicBox.SetAsBox(texture.getSize().x / (SCALE * 2) , texture.getSize().y / (SCALE * 2));
+    dynamicBox.SetAsBox(texture.getSize().x / (SCALE * 2.05) , texture.getSize().y / (SCALE * 2.05));
     body->CreateFixture(&dynamicBox, 1.0f);
 
     body->GetUserData().pointer = (uintptr_t)(this);
-}
-
-sf::Sprite Entity::getSprite() const {
-    return sprite;
 }
 
 bool Entity::isDestroyed() const {
     return destroyed;
 }
 
-void Entity::update() {
-    sf::Vector2<float> position {body->GetPosition().x * SCALE, body->GetPosition().y * SCALE};
-    sprite.setPosition(position);
-}
-
 void Entity::destroy() {
     destroyed = true;
+}
+
+double Entity::getSpeed() const {
+    return speed;
+};
+
+void Entity::setSpeed(double speed) {
+    this->speed = speed;
+}
+
+Entity::eDirection Entity::getDirection() const {
+    return direction;
+}
+
+void Entity::setDirection(Entity::eDirection direction) {
+    this->direction = direction;
+};
+
+std::string Entity::getClassName() const {
+    return className;
+};
+
+void Entity::move(Entity::eDirection direction)
+{
+    b2Vec2 velocity(0, 0);
+    rotate(direction);
+    switch (direction)
+    {
+        case RIGHT:
+            velocity.Set(speed, 0);
+            break;
+        case LEFT:
+            velocity.Set(-speed, 0);
+            break;
+        case UP:
+            velocity.Set(0, -speed);
+            break;
+        case DOWN:
+            velocity.Set(0, speed);
+            break;
+    }
+    this->setDirection(direction);
+    this->getBody()->SetLinearVelocity(velocity);
+};
+
+sf::Sprite Entity::getSprite() const {
+    return sprite;
 }
 
 b2Body* Entity::getBody() {
     return body;
 }
 
-bool Entity::isBullet() const {
-    return bullet;
+void Entity::update() {
+    sf::Vector2<float> position {body->GetPosition().x * SCALE, body->GetPosition().y * SCALE};
+    sprite.setPosition(position);
 }
 
 void Entity::rotate(Entity::eDirection direction) {
