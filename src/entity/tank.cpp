@@ -1,9 +1,9 @@
 #include "tank.h"
 #include <iostream>
 
-Tank::Tank(sf::Image image, sf::Vector2<float> position, b2World &world, eDirection direction, double speed, int hp) : Entity(image, position, world), hp(hp) {
-    setSpeed(speed);
-    setDirection(direction);
+Tank::Tank(sf::Image image, sf::Vector2<float> position, EntityIterator* iterator, eDirection direction, double speed, int hp) :
+    Entity(image, position, iterator, direction), hp(hp), baseSpeed(speed) {
+    className = "tank";
 };
 
 int Tank::getHp() const {
@@ -15,37 +15,32 @@ void Tank::setHp(int newHp) {
 };
 
 void Tank::stop() {
-    b2Vec2 velocity(0, 0);
-    this->getBody()->SetLinearVelocity(velocity);
+    setSpeed(0);
 };
 
 std::shared_ptr<Bullet> Tank::shoot() {
-    b2Vec2 velocity(0, 0);
     auto position = this->getSprite().getPosition();
     auto size = this->getSprite().getTextureRect().getSize();
-    double bulletSpeed = 2 * getSpeed();
+    float bulletSpeed = 2 * baseSpeed;
     switch (getDirection()) {
     case RIGHT:
-        position.x += size.x * 3 / 2;
-        velocity.Set(bulletSpeed, 0);
+        position.x += size.x * 5 / 4;
         break;
     case LEFT:
-        position.x -= size.x * 3 / 2;
-        velocity.Set(-bulletSpeed, 0);
+        position.x -= size.x * 5 / 4;
         break;
     case UP:
-        position.y -= size.y;
-        velocity.Set(0, -bulletSpeed);
+        position.y -= size.y * 3 / 4;
         break;
     case DOWN:
-        position.y += size.y;
-        velocity.Set(0, bulletSpeed);
+        position.y += size.y * 3 / 4;
         break;
     }
     sf::Image image;
     image.loadFromFile("src/resources/bullet.png");
-    std::shared_ptr<Bullet> bulletPointer(new Bullet(image, position, *this->getBody()->GetWorld(), velocity));
+    std::shared_ptr<Bullet> bulletPointer(new Bullet(image, position, getIterator(), getDirection(), bulletSpeed));
     this->bulletPtr = bulletPointer;
+    bulletPtr->rotate(getDirection());
     return bulletPtr;
 };
 
@@ -61,4 +56,9 @@ bool Tank::hasShot() {
 
 void Tank::removeBullet() {
     this->bulletPtr->destroy();
+}
+
+void Tank::move(Entity::eDirection direction) {
+    setSpeed(baseSpeed);
+    Entity::move(direction);
 }

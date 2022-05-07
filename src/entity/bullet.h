@@ -4,5 +4,5 @@
 
 class Bullet : public Entity {
 public:
-    Bullet(sf::Image image, sf::Vector2f position, b2World& world, b2Vec2 velocity);
+    Bullet(sf::Image image, sf::Vector2f position, EntityIterator* iterator, eDirection direction, float speed);
 };

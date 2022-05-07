@@ -1,4 +1,5 @@
 #include "entity.h"
+#include <iostream>
 
 void EntityIterator::add(Entity *entity) {
     entities.push_back(entity);
@@ -16,12 +17,14 @@ void EntityIterator::remove(Entity *entity) {
 
 
 
-Entity::Entity(const sf::Image& image, sf::Vector2f position) {
+Entity::Entity(const sf::Image& image, sf::Vector2f position, EntityIterator* iterator, eDirection direction, float speed) :
+    direction(direction), speed(speed), iterator(iterator) {
     if (!texture.loadFromImage(image))
         throw std::invalid_argument("Invalid image for texture");
     sprite.setTexture(texture);
     sprite.setPosition(position);
     sprite.setOrigin(sf::Vector2<float> {texture.getSize().x / 2.f, texture.getSize().y / 2.f});
+    iterator->entities.push_back(this);
 }
 
 bool Entity::isDestroyed() const {
@@ -32,11 +35,11 @@ void Entity::destroy() {
     destroyed = true;
 }
 
-double Entity::getSpeed() const {
+float Entity::getSpeed() const {
     return speed;
 };
 
-void Entity::setSpeed(double speed) {
+void Entity::setSpeed(float speed) {
     this->speed = speed;
 }
 
@@ -52,45 +55,34 @@ std::string Entity::getClassName() const {
     return className;
 };
 
-void Entity::move(Entity::eDirection direction)
-{
-    b2Vec2 velocity(0, 0);
+void Entity::move(Entity::eDirection direction) {
     rotate(direction);
-    switch (direction)
-    {
-        case RIGHT:
-            velocity.Set(speed, 0);
-            break;
-        case LEFT:
-            velocity.Set(-speed, 0);
-            break;
-        case UP:
-            velocity.Set(0, -speed);
-            break;
-        case DOWN:
-            velocity.Set(0, speed);
-            break;
-    }
-    this->setDirection(direction);
-    this->getBody()->SetLinearVelocity(velocity);
+    setDirection(direction);
 };
 
 sf::Sprite Entity::getSprite() const {
     return sprite;
 }
 
-b2Body* Entity::getBody() {
-    return body;
-}
-
-void Entity::update() {
-    sf::Vector2<float> position {body->GetPosition().x * SCALE, body->GetPosition().y * SCALE};
-    sprite.setPosition(position);
+void Entity::update(float timeStep) {
+    auto position = sprite.getPosition();
+    sprite.setPosition(position + getDelta(timeStep));
+    for (auto entity: iterator->entities) {
+        if (entity == this) continue;
+        if (sprite.getGlobalBounds().findIntersection(
+                entity->getSprite().getGlobalBounds()) != std::nullopt) {
+            if (className == "bullet" && !isDestroyed()) {
+                destroy();
+                entity->destroy();
+            }
+            sprite.setPosition(position);
+            break;
+        }
+    }
 }
 
 void Entity::rotate(Entity::eDirection direction) {
     switch (direction) {
-
         case RIGHT:
             sprite.setRotation(sf::degrees(90.f));
             break;
@@ -108,6 +100,19 @@ void Entity::rotate(Entity::eDirection direction) {
     }
 }
 
-Entity::Entity(const sf::Image &image, sf::Vector2f position) {
+sf::Vector2f Entity::getDelta(float timeStep) {
+    switch (direction) {
+        case RIGHT:
+            return sf::Vector2f {speed * timeStep, 0};
+        case LEFT:
+            return sf::Vector2f {-speed * timeStep, 0};
+        case UP:
+            return sf::Vector2f {0, -speed * timeStep};
+        default:
+            return sf::Vector2f {0, speed * timeStep};
+    }
+}
 
+EntityIterator *Entity::getIterator() {
+    return iterator;
 }

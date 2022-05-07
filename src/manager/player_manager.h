@@ -3,7 +3,7 @@
 
 class PlayerManager {
 public:
-    PlayerManager(sf::RenderWindow& window, sf::Vector2<float> spawnPosition, b2World& world);
+    PlayerManager(sf::RenderWindow& window, sf::Vector2<float> spawnPosition, EntityIterator* iterator);
     void render();
     void update();
     void movePlayer(Entity::eDirection direction);
@@ -14,6 +14,6 @@ private:
     sf::RenderWindow& window;
     std::unique_ptr<PlayerTank> playerPtr;
     std::shared_ptr<Bullet> bulletPtr;
-    b2World& world;
+    EntityIterator* iterator;
     sf::Vector2<float> spawnPosition;
 };

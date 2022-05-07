@@ -2,23 +2,23 @@
 #include <vector>
 #include <memory>
 #include <SFML/Graphics.hpp>
-#include <box2d/b2_world.h>
+#include "../entity/entity.h"
 
 template <typename T>
 class BaseManager {
 public:
-    BaseManager(sf::RenderWindow& window, b2World& world);
+    BaseManager(sf::RenderWindow& window, EntityIterator* iterator);
     void render();
     void update();
     void add(std::shared_ptr<T> entity);
 protected:
     std::vector<std::shared_ptr<T>> entities;
     sf::RenderWindow& window;
-    b2World& world;
+    EntityIterator* iterator;
 };
 
 template <typename T>
-BaseManager<T>::BaseManager(sf::RenderWindow& window, b2World& world): window(window), world(world) {}
+BaseManager<T>::BaseManager(sf::RenderWindow& window, EntityIterator* iterator): window(window), iterator(iterator) {}
 
 template <typename T>
 void BaseManager<T>::render() {
@@ -31,7 +31,7 @@ template <typename T>
 void BaseManager<T>::update() {
     for (int i = 0; i < entities.size(); i++) {
         if (entities.at(i)->isDestroyed()) {
-            world.DestroyBody(entities.at(i)->getBody());
+            iterator->remove(entities.at(i).get());
             entities.erase(entities.begin() + i);
             i--;
         } else {

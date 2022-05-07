@@ -1,6 +1,6 @@
 #include "player_tank.h"
 
-PlayerTank::PlayerTank(sf::Image image, sf::Vector2<float> position, b2World &world, int lives) : Tank::Tank(image, position, world, UP) {
+PlayerTank::PlayerTank(sf::Image image, sf::Vector2<float> position, EntityIterator* iterator, int lives) : Tank::Tank(image, position, iterator, UP) {
     className = "playerTank";
 };
 

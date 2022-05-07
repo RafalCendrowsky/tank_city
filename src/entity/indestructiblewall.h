@@ -4,6 +4,6 @@
 
 class IndestructibleWall : public Entity {
 public:
-    IndestructibleWall(sf::Image image, sf::Vector2f position, b2World& world);
+    IndestructibleWall(sf::Image image, sf::Vector2f position, EntityIterator* iterator);
     void destroy() override;
 };

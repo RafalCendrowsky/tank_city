@@ -3,7 +3,6 @@
 #include "application.h"
 
 void Application::update() {
-    world.Step(timeStep, velocityIterations, positionIterations);
     playerManager.update();
     bulletManager.update();
     enemyManager.update();
@@ -11,7 +10,6 @@ void Application::update() {
 }
 
 void Application::run() {
-    world.SetContactListener(&contactListener);
     window.setKeyRepeatEnabled(false);
     mapManager.createMap();
     sf::Clock clock;
@@ -25,12 +23,11 @@ void Application::run() {
         accumulator += clock.getElapsedTime().asSeconds();
         clock.restart();
         while (accumulator > timeStep) {
+            update();
             std::cout << accumulator << std::endl;
-            world.Step(timeStep, velocityIterations, positionIterations);
             accumulator -= timeStep;
         }
         handleEvents();
-        update();
         render();
         window.display();
         while (clock.getElapsedTime().asSeconds() < timeStep) {}

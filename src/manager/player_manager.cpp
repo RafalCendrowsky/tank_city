@@ -1,11 +1,11 @@
 #include "player_manager.h"
 #include <iostream>
 
-PlayerManager::PlayerManager(sf::RenderWindow& window, sf::Vector2<float> spawnPosition, b2World& world) :
-    window(window), spawnPosition(spawnPosition), world(world) {
+PlayerManager::PlayerManager(sf::RenderWindow& window, sf::Vector2<float> spawnPosition, EntityIterator* iterator) :
+    window(window), spawnPosition(spawnPosition), iterator(iterator) {
     sf::Image image;
     image.loadFromFile("src/resources/tank.png");
-    playerPtr = std::make_unique<PlayerTank>(image, spawnPosition, world);
+    playerPtr = std::make_unique<PlayerTank>(image, spawnPosition, iterator);
 }
 
 void PlayerManager::render() {
@@ -18,7 +18,7 @@ void PlayerManager::update() {
     playerPtr->update();
     if (bulletPtr != nullptr) {
         if (bulletPtr->isDestroyed()) {
-            world.DestroyBody(bulletPtr->getBody());
+            iterator->remove(bulletPtr.get());
             bulletPtr = nullptr;
         } else {
             bulletPtr->update();

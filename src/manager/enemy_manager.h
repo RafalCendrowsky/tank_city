@@ -4,7 +4,7 @@
 
 class EnemyManager: public BaseManager<EnemyTank> {
 public:
-    EnemyManager(sf::RenderWindow& window, b2World& world, BaseManager<Bullet>& bulletManager);
+    EnemyManager(sf::RenderWindow& window, EntityIterator* iterator, BaseManager<Bullet>& bulletManager);
     void act();
 private:
     BaseManager<Bullet> &bulletManager;
