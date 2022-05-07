@@ -1,27 +1,27 @@
 #include "entity.h"
-#include <box2d/b2_fixture.h>
-#include <box2d/b2_polygon_shape.h>
 
-float Entity::SCALE = 100.f;
+void EntityIterator::add(Entity *entity) {
+    entities.push_back(entity);
+}
 
-Entity::Entity(const sf::Image& image, sf::Vector2f position, b2World &world) {
+void EntityIterator::remove(Entity *entity) {
+    int i = 0;
+    for (auto entityI: entities) {
+        if (entityI == entity) {
+            entities.erase(entities.begin() + i);
+        }
+        i++;
+    }
+}
+
+
+
+Entity::Entity(const sf::Image& image, sf::Vector2f position) {
     if (!texture.loadFromImage(image))
         throw std::invalid_argument("Invalid image for texture");
-
     sprite.setTexture(texture);
     sprite.setPosition(position);
-    sprite.setOrigin(sf::Vector2<float> {static_cast<float>(texture.getSize().x) / 2, (float)(texture.getSize().y) / 2});
-
-    b2BodyDef bodyDef;
-    bodyDef.position.Set(position.x / SCALE, position.y / SCALE);
-    bodyDef.type = b2_dynamicBody;
-    body = world.CreateBody(&bodyDef);
-
-    b2PolygonShape dynamicBox;
-    dynamicBox.SetAsBox(texture.getSize().x / (SCALE * 2.05) , texture.getSize().y / (SCALE * 2.05));
-    body->CreateFixture(&dynamicBox, 1.0f);
-
-    body->GetUserData().pointer = (uintptr_t)(this);
+    sprite.setOrigin(sf::Vector2<float> {texture.getSize().x / 2.f, texture.getSize().y / 2.f});
 }
 
 bool Entity::isDestroyed() const {
@@ -106,4 +106,8 @@ void Entity::rotate(Entity::eDirection direction) {
         default:
             break;
     }
+}
+
+Entity::Entity(const sf::Image &image, sf::Vector2f position) {
+
 }

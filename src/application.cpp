@@ -12,7 +12,7 @@ void Application::update() {
 
 void Application::run() {
     world.SetContactListener(&contactListener);
-//    window.setKeyRepeatEnabled(false);
+    window.setKeyRepeatEnabled(false);
     mapManager.createMap();
     sf::Clock clock;
     sf::Clock enemyTimer;
