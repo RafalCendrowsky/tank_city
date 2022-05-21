@@ -18,7 +18,9 @@ protected:
 };
 
 template <typename T>
-BaseManager<T>::BaseManager(sf::RenderWindow& window, EntityIterator* iterator): window(window), iterator(iterator) {}
+BaseManager<T>::BaseManager(sf::RenderWindow& window, EntityIterator* iterator): window(window), iterator(iterator) {
+
+}
 
 template <typename T>
 void BaseManager<T>::render() {

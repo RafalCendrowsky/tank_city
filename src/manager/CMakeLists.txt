@@ -1,1 +1,1 @@
-target_sources(app PRIVATE ../application.cpp player_manager.cpp enemy_manager.cpp map_manager.cpp)
+target_sources(app PRIVATE ../application.cpp player_manager.cpp enemy_manager.cpp map_manager.cpp target_manager.cpp)

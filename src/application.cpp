@@ -7,6 +7,7 @@ void Application::update() {
     bulletManager.update();
     enemyManager.update();
     mapManager.update();
+    targetManager.update();
 }
 
 void Application::run() {
@@ -40,6 +41,7 @@ void Application::render() {
     bulletManager.render();
     enemyManager.render();
     mapManager.render();
+    targetManager.render();
 }
 
 void Application::onKeyPress(int key) {
