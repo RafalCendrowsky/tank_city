@@ -7,7 +7,7 @@ void EnemyManager::act() {
     if (entities.size() < 2) {
         sf::Image image;
         image.loadFromFile("src/resources/enemy_tank.png");
-        std::shared_ptr<EnemyTank> tank(new EnemyTank(image, sf::Vector2<float> {400.f, 400.f}, iterator));
+        std::shared_ptr<EnemyTank> tank(new EnemyTank(image, sf::Vector2<float> {350.f, 160.f}, iterator));
         entities.push_back(tank);
     }
     for (auto enemy: entities) {

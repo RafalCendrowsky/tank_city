@@ -5,8 +5,8 @@
 class MapManager: public BaseManager<Entity> {
 public:
     MapManager(sf::RenderWindow& window, EntityIterator* iterator);
-    void createMap();
-private:
+    void createMap(int level);
+
     void createIndestructibleWall(const sf::Image& image, sf::Vector2<float> position);
 
     void createWall(const sf::Image &image, sf::Vector2<float> position);

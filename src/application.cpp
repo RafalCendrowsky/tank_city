@@ -11,7 +11,7 @@ void Application::update() {
 
 void Application::run() {
     window.setKeyRepeatEnabled(false);
-    mapManager.createMap();
+    mapManager.createMap(1);
     sf::Clock clock;
     sf::Clock enemyTimer;
     float accumulator = 0;
