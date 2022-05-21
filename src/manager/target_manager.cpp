@@ -14,4 +14,7 @@ void TargetManager::render() {
 
 void TargetManager::update() {
     targetPtr->update();
+    if (targetPtr->isDestroyed()) {
+        window.close();
+    }
 }

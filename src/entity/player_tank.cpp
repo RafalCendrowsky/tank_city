@@ -15,3 +15,10 @@ int PlayerTank::getLives() const {
 void PlayerTank::setLives(int lives) {
     this->lives = lives;
 }
+
+void PlayerTank::destroy(){
+    if (this->getLives() > 1)
+        this->setLives(this->getLives() - 1);
+    else
+        destroyed = true;
+}

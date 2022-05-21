@@ -8,6 +8,7 @@ public:
     void stop() override;
     int getLives() const;
     void setLives(int lives);
+    void destroy() override;
 private:
     int lives;
 };

@@ -33,11 +33,12 @@ public:
     sf::Vector2f getDelta(float timeStep);
 protected:
     std::string className = "entity";
+    bool destroyed = false;
 private:
     EntityIterator* iterator;
     float speed;
     eDirection direction;
     sf::Sprite sprite;
     sf::Texture texture;
-    bool destroyed = false;
+
 };
