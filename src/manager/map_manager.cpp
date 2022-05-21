@@ -21,7 +21,6 @@ void MapManager::createMap(int level) {
     default:
         break;
     }
-    crateMap1(window, this);
 }
 
 void MapManager::createIndestructibleWall(const sf::Image& image, sf::Vector2<float> position) {

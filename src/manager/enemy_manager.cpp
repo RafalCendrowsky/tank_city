@@ -8,7 +8,9 @@ void EnemyManager::act() {
         sf::Image image;
         image.loadFromFile("src/resources/enemy_tank.png");
         std::shared_ptr<EnemyTank> tank(new EnemyTank(image, sf::Vector2<float> {350.f, 160.f}, iterator));
+        std::shared_ptr<EnemyTank> tank2(new EnemyTank(image, sf::Vector2<float> {1500.f, 160.f}, iterator));
         entities.push_back(tank);
+        entities.push_back(tank2);
     }
     for (auto enemy: entities) {
         auto direction = Entity::eDirection(rand() % 4);
