@@ -15,6 +15,7 @@ protected:
     std::vector<std::shared_ptr<T>> entities;
     sf::RenderWindow& window;
     EntityIterator* iterator;
+    int points = 0;
 };
 
 template <typename T>
@@ -35,6 +36,7 @@ void BaseManager<T>::update() {
         if (entities.at(i)->isDestroyed()) {
             iterator->remove(entities.at(i).get());
             entities.erase(entities.begin() + i);
+            points += 200;
             i--;
         } else {
             entities.at(i)->update();
