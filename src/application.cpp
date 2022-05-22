@@ -25,7 +25,7 @@ void Application::run() {
         clock.restart();
         while (accumulator > timeStep) {
             update();
-            std::cout << accumulator << std::endl;
+            //std::cout << accumulator << std::endl;
             accumulator -= timeStep;
         }
         handleEvents();

@@ -5,7 +5,7 @@ PlayerManager::PlayerManager(sf::RenderWindow& window, sf::Vector2<float> spawnP
     window(window), spawnPosition(spawnPosition), iterator(iterator) {
     sf::Image image;
     image.loadFromFile("src/resources/tank.png");
-    playerPtr = std::make_unique<PlayerTank>(image, spawnPosition, iterator, 1);
+    playerPtr = std::make_unique<PlayerTank>(image, spawnPosition, iterator);
 }
 
 void PlayerManager::render() {
