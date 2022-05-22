@@ -5,7 +5,7 @@ PlayerManager::PlayerManager(sf::RenderWindow& window, sf::Vector2<float> spawnP
     window(window), spawnPosition(spawnPosition), iterator(iterator) {
     sf::Image image;
     image.loadFromFile("src/resources/tank.png");
-    playerPtr = std::make_unique<PlayerTank>(image, spawnPosition, iterator);
+    playerPtr = std::make_unique<PlayerTank>(image, spawnPosition, iterator, 1);
 }
 
 void PlayerManager::render() {
@@ -16,6 +16,9 @@ void PlayerManager::render() {
 
 void PlayerManager::update() {
     playerPtr->update();
+        if (playerPtr->isDestroyed()) {
+        window.close();
+    }
     if (bulletPtr != nullptr) {
         if (bulletPtr->isDestroyed()) {
             iterator->remove(bulletPtr.get());
