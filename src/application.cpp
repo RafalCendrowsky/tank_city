@@ -11,6 +11,7 @@ void Application::update() {
 }
 
 void Application::run() {
+    window.setPosition(sf::Vector2i(0, 0));
     window.setKeyRepeatEnabled(false);
     mapManager.createMap(1);
     sf::Clock clock;

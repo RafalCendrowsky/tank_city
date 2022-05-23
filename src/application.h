@@ -12,7 +12,7 @@ public:
     void run();
 private:
     EntityIterator iterator;
-    sf::RenderWindow window = sf::RenderWindow(sf::VideoMode(), "Battle City", sf::Style::Fullscreen);
+    sf::RenderWindow window = sf::RenderWindow(sf::VideoMode(sf::Vector2u(1920, 1080)), "Battle City", 0);
     PlayerManager playerManager = PlayerManager(window, sf::Vector2<float> {400.f, 900.f}, &iterator);
     BaseManager<Bullet> bulletManager = BaseManager<Bullet>(window, &iterator);
     EnemyManager enemyManager = EnemyManager(window, &iterator, bulletManager);
