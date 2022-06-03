@@ -8,6 +8,11 @@ PlayerManager::PlayerManager(sf::RenderWindow& window, sf::Vector2<float> spawnP
     playerPtr = std::make_unique<PlayerTank>(image, spawnPosition, iterator);
 }
 
+void PlayerManager::reset() {
+    playerPtr->setPosition(spawnPosition);
+    playerPtr->resetDestroyed();
+}
+
 void PlayerManager::render() {
     window.draw(playerPtr->getSprite());
     if (bulletPtr != nullptr)
@@ -16,9 +21,6 @@ void PlayerManager::render() {
 
 void PlayerManager::update() {
     playerPtr->update();
-        if (playerPtr->isDestroyed()) {
-        window.close();
-    }
     if (bulletPtr != nullptr) {
         if (bulletPtr->isDestroyed()) {
             iterator->remove(bulletPtr.get());
@@ -47,4 +49,8 @@ void PlayerManager::removeBullet() {
     if (bulletPtr != nullptr) {
         playerPtr->removeBullet();
     }
+}
+
+bool PlayerManager::isPlayerDestroyed() {
+    return playerPtr->isDestroyed();
 }

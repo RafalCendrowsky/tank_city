@@ -8,13 +8,19 @@ TargetManager::TargetManager(sf::RenderWindow& window,  sf::Vector2<float> spawn
     targetPtr = std::make_unique<Target>(image, spawnPosition, iterator);
 }
 
+void TargetManager::reset() {
+    targetPtr->setPosition(spawnPosition);
+    targetPtr->resetDestroyed();
+}
+
 void TargetManager::render() {
     window.draw(targetPtr->getSprite());
 }
 
 void TargetManager::update() {
     targetPtr->update();
-    if (targetPtr->isDestroyed()) {
-        window.close();
-    }
+}
+
+bool TargetManager::isTargetDestroyed() {
+    return targetPtr->isDestroyed();
 }
