@@ -87,7 +87,7 @@ void Application::run()
         sf::Clock clock;
         sf::Clock enemyTimer;
         float accumulator = 0;
-        while (!(playerManager.isPlayerDestroyed()||targetManager.isTargetDestroyed()))
+        while (!(playerManager.isPlayerDestroyed()||targetManager.isTargetDestroyed() || enemyManager.getKilledEnemies() >=10))
         {
             if (enemyTimer.getElapsedTime().asSeconds() > 1.8) {
                 enemyManager.act();
