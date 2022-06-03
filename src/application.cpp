@@ -94,7 +94,6 @@ void Application::run()
         while (accumulator > timeStep)
         {
             update();
-            // std::cout << accumulator << std::endl;
             accumulator -= timeStep;
         }
         handleEvents();
@@ -184,10 +183,8 @@ int Application::handleEventsMenu()
         case sf::Event::Closed:
             window.close();
             return 3;
-            break;
         case sf::Event::KeyPressed:
             return onKeyPressMenu(event.key.code);
-            break;
         case sf::Event::KeyReleased:
             if (currentKey == event.key.code)
             {
@@ -203,7 +200,7 @@ int Application::handleEventsMenu()
 
 int Application::onKeyPressMenu(int key)
 {
-    if (pressedKey == false)
+    if (!pressedKey)
     {
         switch (key)
         {
@@ -226,14 +223,11 @@ int Application::onKeyPressMenu(int key)
             {
             case newGame:
                 return 1;
-                break;
             case load:
                 return 2;
-                break;
             case quit:
                 this->window.close();
                 return 3;
-                break;
             default:
                 break;
             }
