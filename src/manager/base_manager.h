@@ -52,9 +52,8 @@ void BaseManager<T>::add(std::shared_ptr<T> entity) {
 
 template<typename T>
 void BaseManager<T>::clear() {
-    for (int i = 0; i < entities.size(); i++) {
+    for (int i = entities.size() - 1; i >= 0; i--) {
         iterator->remove(entities.at(i).get());
         entities.erase(entities.begin() + i);
-        i--;
     }
 }
