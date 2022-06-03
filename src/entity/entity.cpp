@@ -12,7 +12,6 @@ void EntityIterator::remove(Entity *entity) {
 }
 
 
-
 Entity::Entity(const sf::Image& image, sf::Vector2f position, EntityIterator* iterator, eDirection direction, float speed) :
     direction(direction), speed(speed), iterator(iterator) {
     if (!texture.loadFromImage(image))

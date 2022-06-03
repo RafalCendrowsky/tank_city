@@ -10,6 +10,7 @@ public:
     BaseManager(sf::RenderWindow& window, EntityIterator* iterator);
     void render();
     void update();
+    virtual void clear();
     void add(std::shared_ptr<T> entity);
     int getKilledEnemies(){return killedEnemies;}
     void setKilledEnemies(int killed){ killedEnemies = killed;}
@@ -53,4 +54,12 @@ void BaseManager<T>::update() {
 template<typename T>
 void BaseManager<T>::add(std::shared_ptr<T> entity) {
     entities.push_back(entity);
+}
+
+template<typename T>
+void BaseManager<T>::clear() {
+    for (int i = entities.size() - 1; i >= 0; i--) {
+        iterator->remove(entities.at(i).get());
+        entities.erase(entities.begin() + i);
+    }
 }

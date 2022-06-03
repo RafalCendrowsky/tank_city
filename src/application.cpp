@@ -81,9 +81,6 @@ void Application::run()
     {
         int map = menu();
         mapManager.createMap(map);
-        playerManager.reset();
-        targetManager.reset();
-        enemyManager.clear();
         sf::Clock clock;
         sf::Clock enemyTimer;
         float accumulator = 0;
@@ -104,7 +101,16 @@ void Application::run()
             window.display();
             while (clock.getElapsedTime().asSeconds() < timeStep) {}
         }
+        reset();
     }
+}
+
+void Application::reset() {
+    playerManager.reset();
+    targetManager.reset();
+    enemyManager.clear();
+    bulletManager.clear();
+    mapManager.clear();
 }
 
 void Application::render()

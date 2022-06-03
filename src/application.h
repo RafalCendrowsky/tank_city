@@ -30,6 +30,7 @@ enum option
     int menu();
     void update();
     void render();
+    void reset();
     void handleEvents();
     void onKeyPress(int key);
     int handleEventsMenu();
