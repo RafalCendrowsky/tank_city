@@ -10,6 +10,7 @@ public:
     BaseManager(sf::RenderWindow& window, EntityIterator* iterator);
     void render();
     void update();
+    virtual void clear();
     void add(std::shared_ptr<T> entity);
 protected:
     std::vector<std::shared_ptr<T>> entities;
@@ -47,4 +48,13 @@ void BaseManager<T>::update() {
 template<typename T>
 void BaseManager<T>::add(std::shared_ptr<T> entity) {
     entities.push_back(entity);
+}
+
+template<typename T>
+void BaseManager<T>::clear() {
+    for (int i = 0; i < entities.size(); i++) {
+        iterator->remove(entities.at(i).get());
+        entities.erase(entities.begin() + i);
+        i--;
+    }
 }
