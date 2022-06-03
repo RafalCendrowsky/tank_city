@@ -1,10 +1,6 @@
 #include "entity.h"
 #include <iostream>
 
-void EntityIterator::add(Entity *entity) {
-    entities.push_back(entity);
-}
-
 void EntityIterator::remove(Entity *entity) {
     int i = 0;
     for (auto entityI: entities) {
@@ -115,4 +111,12 @@ sf::Vector2f Entity::getDelta(float timeStep) {
 
 EntityIterator *Entity::getIterator() {
     return iterator;
+}
+
+void Entity::setPosition(sf::Vector2f position) {
+    sprite.setPosition(position);
+}
+
+void Entity::resetDestroyed() {
+    destroyed = false;
 }
