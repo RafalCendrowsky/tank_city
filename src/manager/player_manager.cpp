@@ -9,8 +9,9 @@ PlayerManager::PlayerManager(sf::RenderWindow& window, sf::Vector2<float> spawnP
 }
 
 void PlayerManager::reset() {
-    playerPtr->setPosition(spawnPosition);
     playerPtr->resetDestroyed();
+    playerPtr->setLives(2);
+    playerPtr->resetPosition();
 }
 
 void PlayerManager::render() {

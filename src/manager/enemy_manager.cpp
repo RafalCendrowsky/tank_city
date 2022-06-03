@@ -20,3 +20,7 @@ void EnemyManager::act() {
         }
     }
 }
+
+void EnemyManager::clear() {
+    entities.clear();
+}

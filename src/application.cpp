@@ -83,6 +83,7 @@ void Application::run()
         mapManager.createMap(map);
         playerManager.reset();
         targetManager.reset();
+        enemyManager.clear();
         sf::Clock clock;
         sf::Clock enemyTimer;
         float accumulator = 0;

@@ -53,7 +53,6 @@ std::string Entity::getClassName() const {
 
 void Entity::move(Entity::eDirection direction) {
     rotate(direction);
-    setDirection(direction);
 };
 
 sf::Sprite Entity::getSprite() const {
@@ -78,6 +77,7 @@ void Entity::update(float timeStep) {
 }
 
 void Entity::rotate(Entity::eDirection direction) {
+    setDirection(direction);
     switch (direction) {
         case RIGHT:
             sprite.setRotation(sf::degrees(90.f));
