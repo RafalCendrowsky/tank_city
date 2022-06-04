@@ -9,6 +9,8 @@ public:
     int getLives() const;
     void setLives(int newLives);
     void destroy() override;
+    void resetPosition();
 private:
     int lives = 2;
+    sf::Vector2f spawnPosition;
 };

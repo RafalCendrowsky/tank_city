@@ -1,10 +1,6 @@
 #include "entity.h"
 #include <iostream>
 
-void EntityIterator::add(Entity *entity) {
-    entities.push_back(entity);
-}
-
 void EntityIterator::remove(Entity *entity) {
     int i = 0;
     for (auto entityI: entities) {
@@ -14,7 +10,6 @@ void EntityIterator::remove(Entity *entity) {
         i++;
     }
 }
-
 
 
 Entity::Entity(const sf::Image& image, sf::Vector2f position, EntityIterator* iterator, eDirection direction, float speed) :
@@ -57,7 +52,6 @@ std::string Entity::getClassName() const {
 
 void Entity::move(Entity::eDirection direction) {
     rotate(direction);
-    setDirection(direction);
 };
 
 sf::Sprite Entity::getSprite() const {
@@ -82,6 +76,7 @@ void Entity::update(float timeStep) {
 }
 
 void Entity::rotate(Entity::eDirection direction) {
+    setDirection(direction);
     switch (direction) {
         case RIGHT:
             sprite.setRotation(sf::degrees(90.f));
@@ -115,4 +110,12 @@ sf::Vector2f Entity::getDelta(float timeStep) {
 
 EntityIterator *Entity::getIterator() {
     return iterator;
+}
+
+void Entity::setPosition(sf::Vector2f position) {
+    sprite.setPosition(position);
+}
+
+void Entity::resetDestroyed() {
+    destroyed = false;
 }

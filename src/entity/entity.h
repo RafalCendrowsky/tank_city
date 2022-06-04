@@ -5,7 +5,6 @@ class Entity;
 
 class EntityIterator {
 public:
-    void add(Entity* entity);
     void remove(Entity* entity);
     std::vector<Entity*> entities;
 };
@@ -17,12 +16,14 @@ public:
     Entity(const sf::Image& image, sf::Vector2f position, EntityIterator* iterator, eDirection direction = UP, float speed = 0);
     bool isDestroyed() const;
     virtual void destroy();
+    void resetDestroyed();
     float getSpeed() const;
     void setSpeed(float speed);
     eDirection getDirection() const;
     void setDirection(Entity::eDirection direction);
     std::string getClassName() const;
     sf::Sprite getSprite() const;
+    void setPosition(sf::Vector2f position);
     EntityIterator *getIterator();
     void update(float timeStep = 1/60.f);
     virtual void move(Entity::eDirection direction);

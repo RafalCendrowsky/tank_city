@@ -77,33 +77,40 @@ void Application::run()
 {
     window.setPosition(sf::Vector2i(0, 0));
     window.setKeyRepeatEnabled(false);
-    int map = menu();
-    mapManager.createMap(map);
-    sf::Clock clock;
-    sf::Clock enemyTimer;
-    float accumulator = 0;
     while (window.isOpen())
     {
-        if (enemyTimer.getElapsedTime().asSeconds() > 1.8)
+        int map = menu();
+        mapManager.createMap(map);
+        sf::Clock clock;
+        sf::Clock enemyTimer;
+        float accumulator = 0;
+        while (!(playerManager.isPlayerDestroyed()||targetManager.isTargetDestroyed() || enemyManager.getKilledEnemies() >=10))
         {
-            enemyManager.act();
-            enemyTimer.restart();
+            if (enemyTimer.getElapsedTime().asSeconds() > 1.8) {
+                enemyManager.act();
+                enemyTimer.restart();
+            }
+            accumulator += clock.getElapsedTime().asSeconds();
+            clock.restart();
+            while (accumulator > timeStep) {
+                update();
+                accumulator -= timeStep;
+            }
+            handleEvents();
+            render();
+            window.display();
+            while (clock.getElapsedTime().asSeconds() < timeStep) {}
         }
-        accumulator += clock.getElapsedTime().asSeconds();
-        clock.restart();
-        while (accumulator > timeStep)
-        {
-            update();
-            // std::cout << accumulator << std::endl;
-            accumulator -= timeStep;
-        }
-        handleEvents();
-        render();
-        window.display();
-        while (clock.getElapsedTime().asSeconds() < timeStep)
-        {
-        }
+        reset();
     }
+}
+
+void Application::reset() {
+    playerManager.reset();
+    targetManager.reset();
+    enemyManager.clear();
+    bulletManager.clear();
+    mapManager.clear();
 }
 
 void Application::render()
@@ -184,10 +191,8 @@ int Application::handleEventsMenu()
         case sf::Event::Closed:
             window.close();
             return 3;
-            break;
         case sf::Event::KeyPressed:
             return onKeyPressMenu(event.key.code);
-            break;
         case sf::Event::KeyReleased:
             if (currentKey == event.key.code)
             {
@@ -203,7 +208,7 @@ int Application::handleEventsMenu()
 
 int Application::onKeyPressMenu(int key)
 {
-    if (pressedKey == false)
+    if (!pressedKey)
     {
         switch (key)
         {
@@ -224,18 +229,15 @@ int Application::onKeyPressMenu(int key)
         case sf::Keyboard::Space:
             switch (currentOption)
             {
-            case newGame:
-                return 1;
-                break;
-            case load:
-                return 2;
-                break;
-            case quit:
-                this->window.close();
-                return 3;
-                break;
-            default:
-                break;
+                case newGame:
+                    return 1;
+                case load:
+                    return 2;
+                case quit:
+                    this->window.close();
+                    return 3;
+                default:
+                    break;
             }
             break;
         case sf::Keyboard::Escape:
