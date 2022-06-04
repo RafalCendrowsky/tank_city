@@ -27,13 +27,16 @@ enum option
     const float timeStep = 1.0 / 60.0;
     int currentKey;
     option currentOption = newGame;
-    int menu();
+    void menu();
     void update();
     void render();
     void reset();
     void handleEvents();
     void onKeyPress(int key);
+    void printText(std::string text);
+    void win();
     int handleEventsMenu();
     int onKeyPressMenu(int key);
     bool pressedKey = false;
+    int map = 1;
 };

@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <iostream>
+#include <fstream>
 #include "application.h"
 
 void Application::update()
@@ -11,7 +12,7 @@ void Application::update()
     targetManager.update();
 }
 
-int Application::menu()
+void Application::menu()
 {
     window.clear(sf::Color::Black);
     sf::Font font;
@@ -66,11 +67,22 @@ int Application::menu()
         window.display();
     }
     window.display();
-    if (currentKey == load)
+    if (currentOption == load)
     {
-        // read map and points from save
+        std::ifstream save("src/resources/save.txt", std::ofstream::in);
+
+        if (save.is_open())
+        {
+            std::string info;
+            getline(save, info);
+            enemyManager.setPoints(stoi(info));
+            getline(save, info);
+            map = stoi(info);
+            save.close();
+        }
+        else
+            std::cout << "Problem with opening file";
     }
-    return 1;
 }
 
 void Application::run()
@@ -79,33 +91,63 @@ void Application::run()
     window.setKeyRepeatEnabled(false);
     while (window.isOpen())
     {
-        int map = menu();
+        menu();
         mapManager.createMap(map);
         sf::Clock clock;
         sf::Clock enemyTimer;
         float accumulator = 0;
-        while (!(playerManager.isPlayerDestroyed()||targetManager.isTargetDestroyed() || enemyManager.getKilledEnemies() >=10))
+        while (!(playerManager.isPlayerDestroyed() || targetManager.isTargetDestroyed() || enemyManager.getKilledEnemies() >= 2))
         {
-            if (enemyTimer.getElapsedTime().asSeconds() > 1.8) {
+            if (enemyTimer.getElapsedTime().asSeconds() > 1.8)
+            {
                 enemyManager.act();
                 enemyTimer.restart();
             }
             accumulator += clock.getElapsedTime().asSeconds();
             clock.restart();
-            while (accumulator > timeStep) {
+            while (accumulator > timeStep)
+            {
                 update();
                 accumulator -= timeStep;
             }
             handleEvents();
             render();
             window.display();
-            while (clock.getElapsedTime().asSeconds() < timeStep) {}
+            while (clock.getElapsedTime().asSeconds() < timeStep)
+            {
+            }
+        }
+        if (playerManager.isPlayerDestroyed() || targetManager.isTargetDestroyed())
+        {
+            printText("Game Over");
+        }
+        else
+        {
+            win();
+            enemyManager.setKilledEnemies(0);
         }
         reset();
     }
 }
 
-void Application::reset() {
+void Application::win()
+{
+    printText("   You win!");
+    std::ofstream save("src/resources/save.txt", std::ofstream::out);
+    int points = enemyManager.getPoints();
+    int newMap = map + 1;
+    if (save.is_open())
+    {
+        save << points << std::endl;
+        save << newMap << std::endl;
+        save.close();
+    }
+    else
+        std::cout << "Problem with opening file";
+}
+
+void Application::reset()
+{
     playerManager.reset();
     targetManager.reset();
     enemyManager.clear();
@@ -153,6 +195,36 @@ void Application::onKeyPress(int key)
         this->window.close();
     default:
         break;
+    }
+}
+
+void Application::printText(std::string text)
+{
+    window.clear(sf::Color::Black);
+    sf::Font font;
+    font.loadFromFile("src/resources/font.ttf");
+    sf::Text over(text, font, 100);
+    over.setFillColor(sf::Color::Red);
+    over.setStyle(sf::Text::Bold);
+    over.setPosition(sf::Vector2<float>{300, 350});
+    window.draw(over);
+    window.display();
+    sf::Event event{};
+    while (true)
+    {
+        while (window.pollEvent(event))
+        {
+            switch (event.type)
+            {
+            case sf::Event::Closed:
+                window.close();
+                break;
+            case sf::Event::KeyPressed:
+                return;
+            default:
+                break;
+            }
+        }
     }
 }
 
@@ -229,15 +301,15 @@ int Application::onKeyPressMenu(int key)
         case sf::Keyboard::Space:
             switch (currentOption)
             {
-                case newGame:
-                    return 1;
-                case load:
-                    return 2;
-                case quit:
-                    this->window.close();
-                    return 3;
-                default:
-                    break;
+            case newGame:
+                return 1;
+            case load:
+                return 2;
+            case quit:
+                this->window.close();
+                return 3;
+            default:
+                break;
             }
             break;
         case sf::Keyboard::Escape:

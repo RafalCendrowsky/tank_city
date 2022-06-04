@@ -13,6 +13,8 @@ public:
     virtual void clear();
     void add(std::shared_ptr<T> entity);
     int getKilledEnemies(){return killedEnemies;}
+    int getPoints(){return points;}
+    int setPoints(int newPoints){points = newPoints;}
     void setKilledEnemies(int killed){ killedEnemies = killed;}
 protected:
     std::vector<std::shared_ptr<T>> entities;
