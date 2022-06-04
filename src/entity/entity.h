@@ -6,10 +6,7 @@ class Entity;
 class EntityIterator {
 public:
     void remove(Entity* entity);
-private:
     std::vector<Entity*> entities;
-
-    friend class Entity;
 };
 
 class Entity {
