@@ -38,5 +38,5 @@ enum option
     int handleEventsMenu();
     int onKeyPressMenu(int key);
     bool pressedKey = false;
-    int map = 1;
+    int map = 0;
 };

@@ -67,7 +67,9 @@ void Application::menu()
         window.display();
     }
     window.display();
-    if (currentOption == load)
+    if (currentOption == newGame) {
+        map = 1;
+    } else if (currentOption == load)
     {
         std::ifstream save("src/resources/save.txt", std::ofstream::in);
 
@@ -91,12 +93,14 @@ void Application::run()
     window.setKeyRepeatEnabled(false);
     while (window.isOpen())
     {
-        menu();
+        if (map == 0) {
+            menu();
+        }
         mapManager.createMap(map);
         sf::Clock clock;
         sf::Clock enemyTimer;
         float accumulator = 0;
-        while (!(playerManager.isPlayerDestroyed() || targetManager.isTargetDestroyed() || enemyManager.getKilledEnemies() >= 2))
+        while (!(playerManager.isPlayerDestroyed() || targetManager.isTargetDestroyed() || enemyManager.getKilledEnemies() >= 1))
         {
             if (enemyTimer.getElapsedTime().asSeconds() > 1.8)
             {
@@ -123,7 +127,12 @@ void Application::run()
         }
         else
         {
-            win();
+            if (map == 2) {
+                win();
+                map = 0;
+            } else {
+                map++;
+            }
             enemyManager.setKilledEnemies(0);
         }
         reset();
@@ -135,11 +144,10 @@ void Application::win()
     printText("   You win!");
     std::ofstream save("src/resources/save.txt", std::ofstream::out);
     int points = enemyManager.getPoints();
-    int newMap = map + 1;
     if (save.is_open())
     {
         save << points << std::endl;
-        save << newMap << std::endl;
+        save << map << std::endl;
         save.close();
     }
     else

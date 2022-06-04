@@ -13,8 +13,16 @@ void EnemyManager::act() {
         entities.push_back(tank2);
     }
     for (auto enemy: entities) {
-        auto direction = Entity::eDirection(rand() % 4);
-        enemy->move(direction);
+        int randInt = rand() % 20;
+        if (randInt < 6) {
+            enemy->move(Entity::DOWN);
+        } else if (randInt < 11) {
+            enemy->move(Entity::LEFT);
+        } else if (randInt < 16) {
+            enemy->move(Entity::RIGHT);
+        } else if (randInt < 18) {
+            enemy->move(Entity::DOWN);
+        }
         if(!enemy->hasShot()) {
             bulletManager.add(enemy->shoot());
         }

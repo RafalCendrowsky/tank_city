@@ -12,7 +12,7 @@ public:
 class Entity {
 public:
     static float SCALE;
-    enum eDirection {RIGHT, LEFT, UP, DOWN};
+    enum eDirection {RIGHT, LEFT, DOWN, UP};
     Entity(const sf::Image& image, sf::Vector2f position, EntityIterator* iterator, eDirection direction = UP, float speed = 0);
     bool isDestroyed() const;
     virtual void destroy();
