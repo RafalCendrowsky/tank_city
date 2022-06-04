@@ -49,3 +49,6 @@ build
 c_cpp_properties.json
 settings.json
 tasks.json
+tests/.vscode
+tests/tests
+main
